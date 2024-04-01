@@ -1,0 +1,205 @@
+{% extends 'User/Include.html' %} {% load static %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Send Request</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Send Request</h2>
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="sel_category">Category</label>
+          <select
+            class="form-control"
+            name="sel_category"
+            id="sel_category"
+            required
+          >
+            <option value="">Select Category</option>
+            {% for cat in category %}
+            <option value="{{ cat.category_id }}">
+              {{ cat.category_name }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sel_from_state">From State</label>
+          <select class="form-control" name="sel_from_state" id="sel_from_state" required>
+            <option value="">----Select State----</option>
+            {% for i in state %}
+            <option value="{{i.state_id}}">{{i.state_name}}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sel_from_district">From District</label>
+          <select
+            class="form-control"
+            name="sel_from_district"
+            id="sel_from_district"
+            required
+          >
+            <option value="">----Select District----</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sel_from_location">From Location</label>
+          <select
+            class="form-control"
+            name="sel_from_location"
+            id="sel_from_location"
+            required
+          >
+            <option value="">----Select Location----</option>
+          </select>
+        </div>
+        <div class="form-group">
+            <label for="sel_to_state">To State</label>
+            <select class="form-control" name="sel_to_state" id="sel_to_state" required>
+              <option value="">----Select State----</option>
+              {% for i in state %}
+              <option value="{{i.state_id}}">{{i.state_name}}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="sel_to_district">To District</label>
+            <select
+              class="form-control"
+              name="sel_to_district"
+              id="sel_to_district"
+              required
+            >
+              <option value="">----Select District----</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="sel_to_location">To Location</label>
+            <select
+              class="form-control"
+              name="sel_to_location"
+              id="sel_to_location"
+              required
+            >
+              <option value="">----Select Location----</option>
+            </select>
+          </div>
+        <div class="form-group">
+          <label for="txt_request_description">Request Description</label>
+          <textarea
+            class="form-control"
+            name="txt_request_description"
+            id="txt_request_description"
+            rows="3"
+            required
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="txt_request_qty">Request Quantity</label>
+          <input
+            type="text"
+            class="form-control"
+            name="txt_request_qty"
+            id="txt_request_qty"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="txt_request_for_date">Request For Date</label>
+          <input
+            type="date"
+            class="form-control"
+            name="txt_request_for_date"
+            id="txt_request_for_date"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="txt_delivery_time">Delivery Time</label>
+          <input
+            type="time"
+            class="form-control"
+            name="txt_delivery_time"
+            id="txt_delivery_time"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="txt_delivery_date">Delivery Date</label>
+          <input
+            type="date"
+            class="form-control"
+            name="txt_delivery_date"
+            id="txt_delivery_date"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      $('#sel_from_state').change(function () {
+        var sid = $(this).val()
+        var uri = "{% url 'admin:AjaxDistrict' %}"
+        $.ajax({
+          url: uri,
+          data: { sid: sid },
+          success: function (data) {
+            $('#sel_from_district').html(data)
+          },
+        })
+      })
+      $('#sel_from_district').change(function () {
+        var did = $(this).val()
+        var uri = "{% url 'admin:AjaxLocation' %}"
+        $.ajax({
+          url: uri,
+          data: { did: did },
+          success: function (data) {
+            $('#sel_from_location').html(data)
+          },
+        })
+      })
+
+      $('#sel_to_state').change(function () {
+        var sid = $(this).val()
+        var uri = "{% url 'admin:AjaxDistrict' %}"
+        $.ajax({
+          url: uri,
+          data: { sid: sid },
+          success: function (data) {
+            $('#sel_to_district').html(data)
+          },
+        })
+      })
+      $('#sel_to_district').change(function () {
+        var did = $(this).val()
+        var uri = "{% url 'admin:AjaxLocation' %}"
+        $.ajax({
+          url: uri,
+          data: { did: did },
+          success: function (data) {
+            $('#sel_to_location').html(data)
+          },
+        })
+      })
+    </script>
+  </body>
+</html>
+{% endblock content %}

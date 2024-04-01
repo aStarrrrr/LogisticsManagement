@@ -1,0 +1,131 @@
+{% extends 'Guest/Include.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Company Registration</h2>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="txt_name">Name</label>
+                        <input type="text" class="form-control" name="txt_name" id="txt_name" required pattern="^[A-Z]+[a-zA-Z ]*$" title="Name Allows Only Alphabets,Spaces and First Letter Must Be Capital Letter">
+                    </div>
+                    <div class="form-group">
+                        <label for="txt_contact">Contact</label>
+                        <input type="text" class="form-control" name="txt_contact" id="txt_contact" required pattern="[7-9]{1}[0-9]{9}" title="Phone number with 7-9 and remaining 9 digit with 0-9">
+                    </div>
+                    <div class="form-group">
+                        <label for="txt_email">Email</label>
+                        <input type="email" class="form-control" name="txt_email" id="txt_email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="txt_address">Address</label>
+                        <input type="text" class="form-control" name="txt_address" id="txt_address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="txt_since">Since</label>
+                        <input type="date" class="form-control" name="txt_since" id="txt_since" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="file_proof">Proof</label>
+                        <input type="file" class="form-control" name="file_proof" id="file_proof" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="file_logo">Logo</label>
+                        <input type="file" class="form-control" name="file_logo" id="file_logo" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    
+                    <div class="form-group">
+                        <label for="sel_state">State</label>
+                        <select class="form-control" name="sel_state" id="sel_state" required>
+                            <option value="">----Select State----</option>
+                            {% for i in state %}
+                            <option value="{{i.state_id}}">{{i.state_name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sel_district">District</label>
+                        <select class="form-control" name="sel_district" id="sel_district" required>
+                            <option value="">----Select District----</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sel_location">Location</label>
+                        <select class="form-control" name="sel_location" id="sel_location" required>
+                            <option value="">----Select Location----</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="txt_oname">Owner Name</label>
+                        <input type="text" class="form-control" name="txt_oname" id="txt_oname" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="txt_oemail">Owner Email</label>
+                        <input type="email" class="form-control" name="txt_oemail" id="txt_oemail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="txt_ocontact">Owner Contact</label>
+                        <input type="text" class="form-control" name="txt_ocontact" id="txt_ocontact" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="txt_password">Password</label>
+                        <input type="password" class="form-control" name="txt_password" id="txt_password" >
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" name="company_submit" id="company_submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  $("#sel_state").change(function () {
+    var sid = $(this).val();
+    var uri = "{% url 'admin:AjaxDistrict' %}";
+    $.ajax({
+      url: uri,
+      data: { sid: sid },
+      success: function (data) {
+        $("#sel_district").html(data);
+      },
+    });
+  });
+</script>
+<script>
+  $("#sel_district").change(function () {
+    var did = $(this).val();
+    var uri = "{% url 'admin:AjaxLocation' %}";
+    $.ajax({
+      url: uri,
+      data: { did: did },
+      success: function (data) {
+        $("#sel_location").html(data);
+      },
+    });
+  });
+</script>
+{% endblock content %}

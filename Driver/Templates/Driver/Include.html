@@ -1,0 +1,24 @@
+{% load static %}
+<ul>
+  <li>
+    <a href="{% url 'driver:HomePage' %}">Home</a>
+  </li>
+  <li>
+    <a href="{% url 'driver:DriverLicense' %}">License</a>
+  </li>
+  <li>
+    <a href="{% url 'driver:SearchCompany' %}">Search Company</a>
+  </li>
+  <li>
+    <a href="{% url 'driver:ViewRequest' %}">View Request</a>
+  </li>
+  <li>
+    <a href="{% url 'driver:AssignedTrip' %}">Assigned Trip</a>
+  </li>
+  <li>
+    <a href="{% url 'driver:Logout' %}">Logout</a>
+  </li>
+</ul>
+
+{% block content %}
+{% endblock content %}

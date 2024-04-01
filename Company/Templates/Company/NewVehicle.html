@@ -1,0 +1,154 @@
+{% extends 'Company/Include.html' %} 
+{% load static %} 
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Vehicle Registration</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <h2>New Vehicle Registration</h2>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="txt_vehicle_chase_no">Vehicle Chase Number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="txt_vehicle_chase_no"
+            name="txt_vehicle_chase_no"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="txt_vehicle_reg_no">Vehicle Registration Number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="txt_vehicle_reg_no"
+            name="txt_vehicle_reg_no"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="txt_vehicle_insurance_date">Vehicle Insurance Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="txt_vehicle_insurance_date"
+            name="txt_vehicle_insurance_date"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="txt_vehicle_insurance_exp"
+            >Vehicle Insurance Expiry</label
+          >
+          <input
+            type="date"
+            class="form-control"
+            id="txt_vehicle_insurance_exp"
+            name="txt_vehicle_insurance_exp"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="sel_vehicletype">Vehicle Type</label>
+          <select
+            class="form-control"
+            id="sel_vehicletype"
+            name="sel_vehicletype"
+            required
+          >
+            <option value="">----Select VehicleSubType----</option>
+            {% for i in type %}
+            <option value="{{ i.vehicletype_id }}">
+              {{ i.vehicletype_name }}
+            </option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sel_vehiclesubtype">Vehicle Subtype</label>
+          <select
+            class="form-control"
+            id="sel_vehiclesubtype"
+            name="sel_vehiclesubtype"
+            required
+          >
+            <option value="">Select Vehicle Subtype</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="txt_vehicle_detailes">Vehicle Details</label>
+          <textarea
+            class="form-control"
+            id="txt_vehicle_detailes"
+            name="txt_vehicle_detailes"
+            rows="3"
+            required
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="txt_vehicle_name">Vehicle Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="txt_vehicle_name"
+            name="txt_vehicle_name"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="txt_vehicle_amount">Vehicle Amount</label>
+          <input
+            type="text"
+            class="form-control"
+            id="txt_vehicle_amount"
+            name="txt_vehicle_amount"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="txt_vehicle_capacity">Vehicle Capacity</label>
+          <input
+            type="text"
+            class="form-control"
+            id="txt_vehicle_capacity"
+            name="txt_vehicle_capacity"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+   
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'jQuery/jQuery.js' %}"></script>
+    <script>
+      $('#sel_vehicletype').change(function () {
+        var id = $(this).val()
+        var uri = "{% url 'admin:AjaxVehicleSubType' %}"
+        $.ajax({
+          url: uri,
+          data: { id: id },
+          success: function (data) {
+            $('#sel_vehiclesubtype').html(data)
+          },
+        })
+      })
+    </script>
+  </body>
+</html>
+{% endblock content %}

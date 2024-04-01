@@ -1,0 +1,17 @@
+
+{% for i in company %}
+{% if forloop.counter0|divisibleby:3 and not forloop.first %}
+    </div><div class="row">
+{% endif %}
+<div class="col-md-4">
+    <div class="card">
+        <img src="{{ i.company_logo.url }}" class="card-img-top" alt="{{ i.company_name }}">
+        <div class="card-body">
+            <h5 class="card-title">{{ i.company_name }}</h5>
+            <p class="card-text">{{ i.company_contact }}</p>
+            <a href="{% url 'user:SendRequest' i.company_id %}" class="card-link">Send request</a>
+        </div>
+    </div>
+</div>
+{% endfor %}
+

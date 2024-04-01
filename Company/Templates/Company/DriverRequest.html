@@ -1,0 +1,51 @@
+{% extends 'Company/Include.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>SLNo</th>
+                    <th>Driver</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in driverRequest %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.driver_id.driver_name }}</td>
+                    <td>{{ i.request_date }}</td>
+                    <td>
+                        {% if i.request_status == "0" %}
+                            <a href="{% url 'company:DriverRequestAccept' i.request_id %}" class="card-link">Accept</a> &nbsp;&nbsp;&nbsp;|
+                            <a href="{% url 'company:DriverRequestReject' i.request_id %}" class="card-link">Reject</a>
+                        {% elif i.request_status == "1" %}
+                            Accepted
+                        {% elif i.request_status == "2" %}
+                            Rejected
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+{% endblock content %}

@@ -1,0 +1,57 @@
+{% extends 'Company/Include.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Transport Requests</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2>Transport Requests</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Request Description</th>
+                    <th>Request Quantity</th>
+                    <th>Request For Date</th>
+                    <th>Delivery Time</th>
+                    <th>Delivery Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in requestData %}
+                <tr>
+                    <td>{{ request.transport_request_description }}</td>
+                    <td>{{ request.transport_request_qty }}</td>
+                    <td>{{ request.transport_request_for_date }}</td>
+                    <td>{{ request.delivery_time }}</td>
+                    <td>{{ request.delivery_date }}</td>
+                    <td>
+                        {% if request.transport_request_status == 0 %}
+                            <a href="{% url 'company:TransportationRequestAccept' request.transport_request_id %}" class="card-link">Accept</a> &nbsp;&nbsp;&nbsp;|
+                            <a href="{% url 'company:TransportationRequestReject' request.transport_request_id %}" class="card-link">Reject</a>
+                        {% elif request.transport_request_status == 1 %}
+                            Rejected
+                        {% elif request.transport_request_status == 2 %}
+                            Accepted
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+{% endblock content %}

@@ -1,0 +1,18 @@
+{% load static %}
+<ul>
+  <li>
+    <a href="{% url 'user:HomePage' %}">Home</a>
+  </li>
+  <li>
+    <a href="{% url 'user:SearchCompany' %}">Search Company</a>
+  </li>
+  <li>
+    <a href="{% url 'user:ViewRequest' %}">View Request</a>
+  </li>
+  <li>
+    <a href="{% url 'driver:Logout' %}">Logout</a>
+  </li>
+</ul>
+
+{% block content %}
+{% endblock content %}

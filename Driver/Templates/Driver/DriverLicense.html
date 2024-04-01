@@ -1,0 +1,101 @@
+{% extends 'Driver/Include.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver License Management</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2>Driver License Management</h2>
+        
+        <!-- Insert Form -->
+        <h3>Add New Driver License</h3>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="txt_exp_date">Exp Date</label>
+                        <input type="date" class="form-control" name="txt_exp_date" id="txt_exp_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="txt_badge_exp_date">Badge Exp Date</label>
+                        <input type="date" class="form-control" name="txt_badge_exp_date" required id="txt_badge_exp_date">
+                    </div>
+                    <div class="form-group">
+                        <label for="txt_class">Class</label>
+                        <input type="text"  class="form-control" name="txt_class" id="txt_class" required >
+                    </div>
+                    <div class="form-group">
+                        <label for="txt_number">Number</label>
+                        <input type="number"  class="form-control" name="txt_number" id="txt_number" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="file_proof">Front Photo</label>
+                        <input type="file" class="form-control" name="file_front_photo" id="file_front_photo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="file_back_photo">Back Photo</label>
+                        <input type="file" class="form-control" name="file_back_photo" id="file_back_photo" required>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary" >Submit</button>
+            </div>
+        </form>
+
+        <hr>
+
+        <!-- Existing Data Table -->
+        <h3>Existing Driver Licenses</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>SLNo</th>
+                    <th>Expiration Date</th>
+                    <th>Badge Expiration Date</th>
+                    <th>License Class</th>
+                    <th>License Number</th>
+                    <th>Front Photo</th>
+                    <th>Back Photo</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for license in data %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ license.driver_license_exp_date }}</td>
+                    <td>{{ license.driver_license_badge_exp_date }}</td>
+                    <td>{{ license.driver_license_class }}</td>
+                    <td>{{ license.driver_license_number }}</td>
+                    <td><a href="{{ license.driver_license_front_photo.url }}" target="_blank">Open</a></td>
+                    <td><a href="{{ license.driver_license_back_photo.url }}" target="_blank">Open</a></td>
+                    <td>
+                        <a href="{% url 'driver:DeleteDriverLicense' license.driver_license_id %}">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+{% endblock content %}

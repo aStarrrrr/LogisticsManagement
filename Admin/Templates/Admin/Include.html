@@ -1,0 +1,30 @@
+{% load static %}
+<ul>
+  <li>
+    <a href="{% url 'admin:HomePage' %}">Home</a>
+  </li>
+  <li>
+    <a href="{% url 'admin:NewState' %}">State</a>
+  </li>
+  <li>
+    <a href="{% url 'admin:NewDistrict' %}">District</a>
+  </li>
+  <li>
+    <a href="{% url 'admin:NewLocation' %}">Location</a>
+  </li>
+  <li>
+    <a href="{% url 'admin:NewVehicleType' %}">Vehicle Type</a>
+  </li>
+  <li>
+    <a href="{% url 'admin:NewVehicleSubType' %}">Vehicle SubType</a>
+  </li>
+  <li>
+    <a href="{% url 'admin:NewCategory' %}">Category</a>
+  </li>
+  <li>
+    <a href="{% url 'admin:Logout' %}">Logout</a>
+  </li>
+</ul>
+
+{% block content %}
+{% endblock content %}

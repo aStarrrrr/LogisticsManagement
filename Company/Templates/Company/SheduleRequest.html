@@ -1,0 +1,84 @@
+{% extends 'Company/Include.html' %} {% load static %} {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Vehicle Registration</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="sel_driver_1">Driver 1</label>
+          <select
+            class="form-control"
+            id="sel_driver_1"
+            name="sel_driver_1"
+            required
+          >
+            <option value="">----Select Driver----</option>
+            {% for i in driver %}
+            <option value="{{ i.driver_id }}">{{ i.driver_name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sel_driver_2">Driver 2</label>
+          <select
+            class="form-control"
+            id="sel_driver_2"
+            name="sel_driver_2"
+            required
+          >
+            <option value="">----Select Driver----</option>
+            {% for i in driver %}
+            <option value="{{ i.driver_id }}">{{ i.driver_name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="sel_vehicle">Vehicle</label>
+          <select
+            class="form-control"
+            id="sel_vehicle"
+            name="sel_vehicle"
+            required
+          >
+            <option value="">----Select Vehicle----</option>
+            {% for i in vehicle %}
+            <option value="{{ i.vehicle_id }}">{{ i.vehicle_name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{% static 'jQuery/jQuery.js' %}"></script>
+    <script>
+      $('#sel_vehicletype').change(function () {
+        var id = $(this).val()
+        var uri = "{% url 'admin:AjaxVehicleSubType' %}"
+        $.ajax({
+          url: uri,
+          data: { id: id },
+          success: function (data) {
+            $('#sel_vehiclesubtype').html(data)
+          },
+        })
+      })
+    </script>
+  </body>
+</html>
+{% endblock content %}

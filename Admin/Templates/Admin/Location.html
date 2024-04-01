@@ -1,0 +1,81 @@
+{% extends 'Admin/Include.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table border="1">
+            <tr>
+                <td>State</td>
+                <td>
+                    <select name="sel_state" id="sel_state">
+                    <option value="">----Select State----</option>
+                    {% for i in state %}
+                    <option value="{{i.state_id}}">{{i.state_name}}</option>
+                    {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <td>District</td>
+                <td>
+                    <select name="sel_district" id="sel_district" >
+                        <option value="">----Select District----</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Location</td>
+                <td><input type="text" name="txt_location"></td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <input type="submit" value="save">
+                    <input type="reset" value="cancel">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <table>
+        <tr>
+            <th>Si No</th>
+            <th>State</th>
+            <th>District</th>
+            <th>Location</th>
+            <th>Action</th>
+        </tr>
+        {% for i in location %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.district_id.state_id.state_name}}</td>
+            <td>{{i.district_id.district_name}}</td>
+            <td>{{i.location_name}}</td>
+            <td><a href="{% url 'admin:DeleteLocation' i.location_id %}">Delete</a></td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</body>
+</html>
+
+<script src="{% static 'jQuery/jQuery.js' %}"></script>
+<script>
+    $("#sel_state").change(function () {
+        var sid = $(this).val();
+        var uri = "{% url 'admin:AjaxDistrict' %}"
+        $.ajax({
+            url: uri,
+            data: { sid: sid, },
+            success: function (data) {
+                $("#sel_district").html(data);
+            },
+        });
+    });
+</script>
+{% endblock content %}

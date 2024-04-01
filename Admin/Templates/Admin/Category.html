@@ -1,0 +1,42 @@
+{% extends 'Admin/Include.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Category</td>
+                <td><input type="text" name="txt_category" id="" value="{{editdata.category_name}}"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" value="Save"><input type="reset" value="Cancel">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <table>
+        <tr>
+            <th>#</th>
+            <th>Category</th>
+            <th>Action</th>
+        </tr>
+        {% for i in category %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.category_name}}</td>
+            <td><a href="{% url 'admin:DeleteCategory' i.category_id %}">Delete</a></td>
+            <td><a href="{% url 'admin:EditCategory' i.category_id %}">Edit</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+{% endblock content %}

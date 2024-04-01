@@ -1,0 +1,24 @@
+{% load static %}
+<ul>
+  <li>
+    <a href="{% url 'company:HomePage' %}">Home</a>
+  </li>
+  <li>
+    <a href="{% url 'company:NewVehicle' %}">New Vehicle</a>
+  </li>
+  <li>
+    <a href="{% url 'company:VehicleList' %}">Vehicle List</a>
+  </li>
+  <li>
+    <a href="{% url 'company:DriverRequest' %}">Driver Request</a>
+  </li>
+  <li>
+    <a href="{% url 'company:TransportationRequest' %}">Transportation Request</a>
+  </li>
+  <li>
+    <a href="{% url 'company:Logout' %}">Logout</a>
+  </li>
+</ul>
+
+{% block content %}
+{% endblock content %}

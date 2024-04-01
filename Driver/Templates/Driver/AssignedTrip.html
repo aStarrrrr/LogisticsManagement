@@ -1,0 +1,92 @@
+{% extends 'Driver/Include.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <form>
+        <div class="container">
+            <table class="table">
+                <tr>
+                    <th>sl.no</th>
+                    <th>Start Date</th>
+                    <th>Vehicle</th>
+                    <th>Action</th>
+                </tr>
+                {% for schedule in data %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ schedule.transport_request_id.transport_request_for_date }}</td>
+                    <td>{{ schedule.vehicle_id.vehicle_name }}
+                        <input type="hidden" value="{{ schedule.transport_request_id.transport_request_status }}" id="status">
+                        <input type="hidden" value="{{ schedule.transport_request_id.transport_request_id }}" id="hid">
+                    </td>
+                    <td>
+                        {% if schedule.transport_request_id.transport_request_status == 2 %}
+                            <a href="AssignedTrip.jsp?sid={{ schedule.transport_shedule_id }}">Start</a>
+                        {% elif schedule.transport_request_id.transport_request_status == 3 %}
+                            <a href="AssignedTrip.jsp?did={{ schedule.transport_shedule_id }}">Delivered ?</a>
+                        {% else %}
+                            Delivered
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </form>
+    <script src="../Assets/JQuery/jQuery.js"></script>
+    <script>
+        $(document).ready(function() {
+            var Longitude, Latitude, Coords;
+            var id = document.getElementById("hid");
+            var status = document.getElementById("status").value;
+
+            if ((status.trim()) === "4") {
+                setInterval(function() {
+                    var Longitude, Latitude;
+                    var id = 1;
+                    function showPosition(position) {
+                        Latitude = position.coords.latitude;
+                        Longitude = position.coords.longitude;
+
+                        console.clear();
+
+                        console.log("Latitude = " + Latitude);
+                        console.log("Longitude = " + Longitude);
+
+                        $.ajax({
+                            type: "POST",
+                            data: {
+                                id: id,
+                                longitude: Longitude,
+                                latitude: Latitude
+                            },
+                            url: "../Assets/AjaxPages/AjaxUpdate.jsp?id=" + id + "&longitude=" + Longitude + "&latitude=" + Latitude,
+                            success: function() {}
+                        });
+
+                    }
+
+                    function getLocation() {
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(showPosition);
+                        } else {
+                            alert("Geolocation is not supported by this browser.");
+                        }
+                    }
+                    getLocation();
+
+                }, 5000);
+            }
+        });
+    </script>
+</body>
+</html>
+{% endblock content %}

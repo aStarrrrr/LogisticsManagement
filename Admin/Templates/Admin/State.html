@@ -1,0 +1,42 @@
+{% extends 'Admin/Include.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>State</td>
+                <td><input type="text" name="txt_state" id="" value="{{editdata.state_name}}"></td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center"><input type="submit" value="Save"><input type="reset" value="Cancel">
+                </td>
+            </tr>
+        </table>
+    </form>
+    <table>
+        <tr>
+            <th>#</th>
+            <th>State</th>
+            <th>Action</th>
+        </tr>
+        {% for i in state %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.state_name}}</td>
+            <td><a href="{% url 'admin:DeleteState' i.state_id %}">Delete</a></td>
+            <td><a href="{% url 'admin:EditState' i.state_id %}">Edit</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+{% endblock content %}

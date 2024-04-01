@@ -1,0 +1,56 @@
+{% extends 'Company/Include.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>SLNo</th>
+                    <th>Vehicle Chase No</th>
+                    <th>Vehicle Reg No</th>
+                    <th>Insurance Date</th>
+                    <th>Insurance Expiry</th>
+                    <th>Vehicle Subtype</th>
+                    <th>Company</th>
+                    <th>Details</th>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Capacity</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vehicle in vehicles %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ vehicle.vehicle_chase_no }}</td>
+                    <td>{{ vehicle.vehicle_reg_no }}</td>
+                    <td>{{ vehicle.vehicle_insurance_date }}</td>
+                    <td>{{ vehicle.vehicle_insurance_exp }}</td>
+                    <td>{{ vehicle.vehiclesubtype_id.vehiclesubtype_name }}</td>
+                    <td>{{ vehicle.company_id.company_name }}</td>
+                    <td>{{ vehicle.vehicle_detailes }}</td>
+                    <td>{{ vehicle.vehicle_name }}</td>
+                    <td>{{ vehicle.vehicle_amount }}</td>
+                    <td>{{ vehicle.vehicle_capacity }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+{% endblock content %}
