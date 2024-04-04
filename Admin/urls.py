@@ -33,6 +33,9 @@ urlpatterns = [
     path('DeleteCategory/<int:did>',views.DeleteCategory,name="DeleteCategory"),
     path('EditCategory/<int:eid>',views.EditCategory,name="EditCategory"),
 
+    path('route/',views.route,name="route"),
+    path('deleteroute/<int:did>',views.deleteroute,name="deleteroute"),
+
 
     path('Logout/',views.Logout,name="Logout"),
 

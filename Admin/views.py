@@ -195,7 +195,22 @@ def AjaxCompanyUser(request):
     company=tbl_company.objects.filter(location_id=location)
     return render(request,"Admin/AjaxCompanyUser.html",{"company" : company})
 
+def route(request):
+    route = tbl_route.objects.all()
+    state = tbl_state.objects.all()
+    if request.method == "POST":
+        tbl_route.objects.create(route_distance=request.POST.get("txt_distance"),
+                            route_name=request.POST.get("txt_name"),
+                            from_location_id=tbl_location.objects.get(location_id=request.POST.get("sel_flocation")),
+                            to_location_id=tbl_location.objects.get(location_id=request.POST.get("sel_tlocation")))
+        return redirect("admin:route")
+    else:
+        return render(request,"Admin/Route.html",{"route":route,'state':state})
 
+def deleteroute(request,did):
+    tbl_route.objects.get(route_id=did).delete()
+    return redirect("admin:route")
+    
 def Logout(request):
     del request.session["aid"]
     return redirect("guest:Login")
