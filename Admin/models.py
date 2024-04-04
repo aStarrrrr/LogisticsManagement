@@ -37,8 +37,8 @@ class tbl_route(models.Model):
     route_id = models.AutoField(primary_key=True)
     route_distance = models.CharField(max_length=50)
     route_name = models.CharField(max_length=50)
-    from_location_id = models.ForeignKey(tbl_location,on_delete=models.CASCADE,related_name="from_location_id")
-    to_location_id = models.ForeignKey(tbl_location,on_delete=models.CASCADE,related_name="to_location_id")
+    from_location_id = models.ForeignKey(tbl_location,on_delete=models.CASCADE,related_name="from_location_id1")
+    to_location_id = models.ForeignKey(tbl_location,on_delete=models.CASCADE,related_name="to_location_id1")
 
 
 

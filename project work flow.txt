@@ -1,0 +1,16 @@
+1.admin basic datas enetring
+2.company registration
+3.Company login
+4.company add vehicles
+5.driver registration
+6.driver login
+7.driver search company
+8.driver send request to company
+9.company view and manage driver rquest (then that driver is company driver)
+10.user registration
+11.user login 
+12.search company
+13.send request to company
+14.company manage request and assign to driver
+15.driver view assign trip
+16.upload trip updates

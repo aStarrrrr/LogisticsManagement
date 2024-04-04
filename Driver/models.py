@@ -19,5 +19,5 @@ class tbl_transport_update(models.Model):
     transport_shedule_id = models.ForeignKey(tbl_transport_shedule,on_delete=models.CASCADE)
     transport_update_id = models.AutoField(primary_key=True)
     transport_update_datetime = models.DateField(auto_now_add=True)
-    transport_update_location = models.CharField(max_length=50)
-    transport_update_status = models.IntegerField(default=0)
+    transport_update_latitude = models.CharField(max_length=50)
+    transport_update_longitude = models.CharField(max_length=50)

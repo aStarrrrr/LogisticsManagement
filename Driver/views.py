@@ -2,7 +2,9 @@ from django.shortcuts import render,redirect
 from Admin.models import *
 from Driver.models import *
 from Company.models import *
+from User.models import *
 from Guest.models import *
+from django.http import JsonResponse
 from .utils import dijkstra
 
 def HomePage(request):
@@ -27,7 +29,7 @@ def DriverLicense(request):
 
 def DeleteDriverLicense(request,id):
     tbl_driver_license.objects.get(driving_license_id=id).delete()
-    return redirect("admin:DriverLicense")
+    return redirect("driver:DriverLicense")
 
 def SearchCompany(request):
     state = tbl_state.objects.all()
@@ -54,6 +56,12 @@ def AssignedTrip(request):
     data = tbl_transport_shedule.objects.filter(driver_1_id=did) | tbl_transport_shedule.objects.filter(driver_2_id=did)
     return render(request,"Driver/AssignedTrip.html",{'data':data})
 
+def AssignedUpdate(request,id,sts):
+    data = tbl_transport_request.objects.get(transport_request_id=id)
+    data.transport_request_status=sts
+    data.save()
+    return redirect("driver:AssignedTrip")
+
 
 def shortest_path(request, start_id, end_id):
     start_location = tbl_location.objects.get(location_id=start_id)
@@ -69,9 +77,18 @@ def shortest_path(request, start_id, end_id):
     # Find shortest path
     distances = dijkstra(graph, start_location)
     shortest_distance = distances[end_location]
-    
+
     return {'start_location': start_location,'end_location': end_location,'shortest_distance': shortest_distance}
 
+
+def AjaxUpdate(request):
+    id = tbl_transport_shedule.objects.get(trasport_shedule_id=request.GET.get("id"))
+    tbl_transport_update.objects.create(
+        transport_shedule_id = id,
+        transport_update_latitude = request.GET.get("longitude"),
+        transport_update_longitude = request.GET.get("latitude")
+    )
+    return JsonResponse({"msg":"success"})
 
 
 def Logout(request):
