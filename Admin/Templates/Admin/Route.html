@@ -13,131 +13,30 @@
         {% csrf_token %}
         <table>
             <tr>
-                <td>Route Distance</td>
-                <td><input type="text" name="txt_distance" id=""></td>
+                <td>Route</td>
+                <td><input type="text" name="txt_route" id="" value="{{editdata.route_name}}"></td>
             </tr>
             <tr>
-                <td>Route Name</td>
-                <td><input type="text" name="txt_name" id=""></td>
-            </tr>
-            <tr>
-                <td>State</td>
-                <td>
-                    <select name="sel_state" id="sel_state">
-                        <option value="">----Select State----</option>
-                        {% for i in state %}
-                        <option value="{{i.state_id}}">{{i.state_name}}</option>
-                        {% endfor %}
-                    </select>
+                <td colspan="2" align="center"><input type="submit" value="Save"><input type="reset" value="Cancel">
                 </td>
-            </tr>
-            <tr>
-                <td>District</td>
-                <td>
-                    <select name="sel_district" id="sel_district">
-                        <option value="">----Select District----</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>From Location</td>
-                <td>
-                    <select name="sel_flocation" id="sel_location">
-                        <option value="">----Select Location----</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>State</td>
-                <td>
-                    <select name="sel_state" id="sel_state">
-                        <option value="">----Select State----</option>
-                        {% for i in state %}
-                        <option value="{{i.state_id}}">{{i.state_name}}</option>
-                        {% endfor %}
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>District</td>
-                <td>
-                    <select name="sel_district" id="sel_district1">
-                        <option value="">----Select District----</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>To Location</td>
-                <td>
-                    <select name="sel_tlocation" id="sel_location1">
-                        <option value="">----Select Location----</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td><input type="submit" value="Add"></td>
             </tr>
         </table>
     </form>
-    <table cellpadding="10">
+    <table>
         <tr>
-            <td>#</td>
-            <td>Name</td>
-            <td>Distance</td>
-            <td>From Location</td>
-            <td>To Location</td>
-            <td>Action</td>
+            <th>#</th>
+            <th>Route</th>
+            <th>Action</th>
         </tr>
         {% for i in route %}
         <tr>
             <td>{{forloop.counter}}</td>
             <td>{{i.route_name}}</td>
-            <td>{{i.route_distance}}</td>
-            <td>{{i.from_location_id.location_name}}</td>
-            <td>{{i.to_location_id.location_name}}</td>
-            <td><a href="{% url 'admin:deleteroute' i.route_id %}">Delete</a></td>
+            <td><a href="{% url 'admin:DeleteRoute' i.route_id %}">Delete</a></td>
+            <td><a href="{% url 'admin:EditRoute' i.route_id %}">Edit</a></td>
         </tr>
         {% endfor %}
     </table>
 </body>
 </html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script>
-  $("#sel_state").change(function () {
-    var sid = $(this).val();
-    var uri = "{% url 'admin:AjaxDistrict' %}";
-    $.ajax({
-      url: uri,
-      data: { sid: sid },
-      success: function (data) {
-        $("#sel_district").html(data);
-        $("#sel_district1").html(data);
-      },
-    });
-  });
-  $("#sel_district").change(function () {
-    var did = $(this).val();
-    var uri = "{% url 'admin:AjaxLocation' %}";
-    $.ajax({
-      url: uri,
-      data: { did: did },
-      success: function (data) {
-        $("#sel_location").html(data);
-        $("#sel_location1").html(data);
-      },
-    });
-  });
-
-  $("#sel_location").change(function () {
-    var lid = $(this).val();
-    var uri = "{% url 'admin:AjaxCompanyUser' %}";
-    $.ajax({
-      url: uri,
-      data: { lid: lid },
-      success: function (data) {
-        $("#div_company").html(data);
-      },
-    });
-  });
-</script>
 {% endblock content %}

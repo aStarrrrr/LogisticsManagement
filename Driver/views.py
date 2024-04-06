@@ -81,12 +81,12 @@ def shortest_path(request, start_id, end_id):
     return {'start_location': start_location,'end_location': end_location,'shortest_distance': shortest_distance}
 
 
-def AjaxUpdate(request):
-    id = tbl_transport_shedule.objects.get(trasport_shedule_id=request.GET.get("id"))
+def AjaxUpdate(request):    
+    id = tbl_transport_request.objects.get(transport_request_id=request.GET.get("id"))
     tbl_transport_update.objects.create(
-        transport_shedule_id = id,
-        transport_update_latitude = request.GET.get("longitude"),
-        transport_update_longitude = request.GET.get("latitude")
+        transport_request_id = id,
+        transport_update_latitude = request.GET.get("latitude"),
+        transport_update_longitude = request.GET.get("longitude")
     )
     return JsonResponse({"msg":"success"})
 

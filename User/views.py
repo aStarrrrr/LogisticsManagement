@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from Admin.models import *
 from User.models import *
 from Company.models import *
+from Driver.models import *
 from Guest.models import *
 
 def HomePage(request):
@@ -41,6 +42,16 @@ def ViewRequest(request):
     uid = tbl_user.objects.get(user_id=request.session['uid'])
     requestData = tbl_transport_request.objects.filter(user_id=uid)
     return render(request,"User/ViewRequest.html",{'requestData':requestData})
+
+def TransportProgress(request,id):
+    request_id = tbl_transport_request.objects.get(transport_request_id=id)
+    transport_updates = tbl_transport_update.objects.filter(transport_request_id=request_id)
+    transport_update_data = [{
+        'latitude': update.transport_update_latitude,
+        'longitude': update.transport_update_longitude
+    } for update in transport_updates]
+    print(transport_update_data)
+    return render(request, 'User/TransportProgress.html', {'transport_update_data': transport_update_data})
 
 
 

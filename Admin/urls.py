@@ -13,6 +13,10 @@ urlpatterns = [
     path('NewState/',views.NewState,name="NewState"),
     path('DeleteState/<int:did>',views.DeleteState,name="DeleteState"),
     path('EditState/<int:eid>',views.EditState,name="EditState"),
+
+    path('NewRoute/',views.NewRoute,name="NewRoute"),
+    path('DeleteRoute/<int:did>',views.DeleteRoute,name="DeleteRoute"),
+    path('EditRoute/<int:eid>',views.EditRoute,name="EditRoute"),
     
     path('NewDistrict/',views.NewDistrict,name="NewDistrict"),
     path('DeleteDistrict/<int:did>',views.DeleteDistrict,name="DeleteDistrict"),
@@ -33,8 +37,8 @@ urlpatterns = [
     path('DeleteCategory/<int:did>',views.DeleteCategory,name="DeleteCategory"),
     path('EditCategory/<int:eid>',views.EditCategory,name="EditCategory"),
 
-    path('route/',views.route,name="route"),
-    path('deleteroute/<int:did>',views.deleteroute,name="deleteroute"),
+    path('NewPoints/',views.NewPoints,name="NewPoints"),
+    path('DeletePoints/<int:did>',views.DeletePoints,name="DeletePoints"),
 
 
     path('Logout/',views.Logout,name="Logout"),

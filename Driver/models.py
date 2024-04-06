@@ -1,6 +1,6 @@
 from django.db import models
 from Guest.models import *
-from Company.models import tbl_transport_shedule
+from Company.models import *
 
 
 class tbl_driver_license(models.Model):
@@ -16,7 +16,7 @@ class tbl_driver_license(models.Model):
 
 
 class tbl_transport_update(models.Model):
-    transport_shedule_id = models.ForeignKey(tbl_transport_shedule,on_delete=models.CASCADE)
+    transport_request_id = models.ForeignKey(tbl_transport_request,on_delete=models.CASCADE)
     transport_update_id = models.AutoField(primary_key=True)
     transport_update_datetime = models.DateField(auto_now_add=True)
     transport_update_latitude = models.CharField(max_length=50)

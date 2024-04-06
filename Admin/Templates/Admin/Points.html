@@ -1,0 +1,158 @@
+{% extends 'Admin/Include.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="" method="post">
+        {% csrf_token %}
+        <table>
+            <tr>
+                <td>Point Distance From previous Point</td>
+                <td><input type="text" name="txt_distance" id=""></td>
+            </tr>
+            <tr>
+                <td>Point Name</td>
+                <td><input type="text" name="txt_name" id=""></td>
+            </tr>
+            <tr>
+                <td>Point Order </td>
+                <td><input type="text" name="txt_order" id=""></td>
+            </tr>
+            <tr>
+                <td>Route</td>
+                <td>
+                    <select name="sel_route" id="sel_route">
+                        <option value="">----Select Route----</option>
+                        {% for i in route %}
+                        <option value="{{i.route_id}}">{{i.route_name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>State</td>
+                <td>
+                    <select name="sel_state" id="sel_state">
+                        <option value="">----Select State----</option>
+                        {% for i in state %}
+                        <option value="{{i.state_id}}">{{i.state_name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>District</td>
+                <td>
+                    <select name="sel_district" id="sel_district">
+                        <option value="">----Select District----</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>From Location</td>
+                <td>
+                    <select name="sel_flocation" id="sel_location">
+                        <option value="">----Select Location----</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>State</td>
+                <td>
+                    <select name="sel_state" id="sel_state">
+                        <option value="">----Select State----</option>
+                        {% for i in state %}
+                        <option value="{{i.state_id}}">{{i.state_name}}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>District</td>
+                <td>
+                    <select name="sel_district" id="sel_district1">
+                        <option value="">----Select District----</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>To Location</td>
+                <td>
+                    <select name="sel_tlocation" id="sel_location1">
+                        <option value="">----Select Location----</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><input type="submit" value="Add"></td>
+            </tr>
+        </table>
+    </form>
+    <table cellpadding="10">
+        <tr>
+            <td>#</td>
+            <td>Name</td>
+            <td>Distance</td>
+            <td>From Location</td>
+            <td>To Location</td>
+            <td>Action</td>
+        </tr>
+        {% for i in points %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.route_id.route_name}}</td>
+            <td>{{i.points_distance}}</td>
+            <td>{{i.from_location_id.location_name}}</td>
+            <td>{{i.to_location_id.location_name}}</td>
+            <td><a href="{% url 'admin:DeletePoints' i.points_id %}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  $("#sel_state").change(function () {
+    var sid = $(this).val();
+    var uri = "{% url 'admin:AjaxDistrict' %}";
+    $.ajax({
+      url: uri,
+      data: { sid: sid },
+      success: function (data) {
+        $("#sel_district").html(data);
+        $("#sel_district1").html(data);
+      },
+    });
+  });
+  $("#sel_district").change(function () {
+    var did = $(this).val();
+    var uri = "{% url 'admin:AjaxLocation' %}";
+    $.ajax({
+      url: uri,
+      data: { did: did },
+      success: function (data) {
+        $("#sel_location").html(data);
+        $("#sel_location1").html(data);
+      },
+    });
+  });
+
+  $("#sel_location").change(function () {
+    var lid = $(this).val();
+    var uri = "{% url 'admin:AjaxCompanyUser' %}";
+    $.ajax({
+      url: uri,
+      data: { lid: lid },
+      success: function (data) {
+        $("#div_company").html(data);
+      },
+    });
+  });
+</script>
+{% endblock content %}

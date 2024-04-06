@@ -31,6 +31,31 @@ def EditCategory(request,eid):
     
 # Category Functions End
 
+# Route Function Start
+
+def NewRoute(request):
+    route = tbl_route.objects.all()
+    if request.method=="POST":
+        tbl_route.objects.create(route_name=request.POST.get('txt_route'))
+        return render(request,"Admin/Route.html",{'route':route})
+    else:
+        return render(request,"Admin/Route.html",{'route':route})
+    
+def DeleteRoute(request,did):
+    tbl_route.objects.get(route_id=did).delete()
+    return redirect("admin:NewRoute")
+
+def EditRoute(request,eid):
+    route = tbl_route.objects.all()
+    editdata=tbl_route.objects.get(route_id=eid)
+    if request.method=="POST":
+        editdata.route_name=request.POST.get('txt_route')
+        editdata.save()
+        return redirect("admin:NewRoute")
+    else:
+        return render(request,"Admin/Route.html",{'editdata':editdata,'route':route})
+    
+# Route Functions End
 
 # State Function Start
 
@@ -195,21 +220,25 @@ def AjaxCompanyUser(request):
     company=tbl_company.objects.filter(location_id=location)
     return render(request,"Admin/AjaxCompanyUser.html",{"company" : company})
 
-def route(request):
+def NewPoints(request):
     route = tbl_route.objects.all()
     state = tbl_state.objects.all()
+    points = tbl_points.objects.all()
     if request.method == "POST":
-        tbl_route.objects.create(route_distance=request.POST.get("txt_distance"),
-                            route_name=request.POST.get("txt_name"),
+        selectedRoute=tbl_route.objects.get(route_id=request.POST.get("sel_route"))
+        tbl_points.objects.create(points_distance=request.POST.get("txt_distance"),
+                            points_name=request.POST.get("txt_name"),
+                            points_order=request.POST.get("txt_order"),
+                            route_id = selectedRoute,
                             from_location_id=tbl_location.objects.get(location_id=request.POST.get("sel_flocation")),
                             to_location_id=tbl_location.objects.get(location_id=request.POST.get("sel_tlocation")))
-        return redirect("admin:route")
+        return redirect("admin:NewPoints")
     else:
-        return render(request,"Admin/Route.html",{"route":route,'state':state})
+        return render(request,"Admin/Points.html",{"route":route,'points':points,'state':state})
 
-def deleteroute(request,did):
-    tbl_route.objects.get(route_id=did).delete()
-    return redirect("admin:route")
+def DeletePoints(request,did):
+    tbl_points.objects.get(points_id=did).delete()
+    return redirect("admin:NewPoints")
     
 def Logout(request):
     del request.session["aid"]

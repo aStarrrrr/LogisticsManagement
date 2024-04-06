@@ -6,5 +6,6 @@ urlpatterns = [
     path('SearchCompany/',views.SearchCompany,name="SearchCompany"),
     path('SendRequest/<int:cid>',views.SendRequest,name="SendRequest"),
     path('ViewRequest/',views.ViewRequest,name="ViewRequest"),
+    path('TransportProgress/<int:id>',views.TransportProgress,name="TransportProgress"),
     path('Logout/',views.Logout,name="Logout"), 
 ]

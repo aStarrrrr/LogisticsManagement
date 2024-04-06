@@ -44,36 +44,34 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         $(document).ready(function() {
-            var Longitude, Latitude, Coords;
-            var id = document.getElementById("hid");
-            var status = document.getElementById("status").value;
-
-            if ((status.trim()) === "3") {
+            var uri = "{% url 'driver:AjaxUpdate' %}";
+    
+            var id = $("#hid").val(); // Get the value of the hidden input with id 'hid'
+            var status = $("#status").val(); // Get the value of the hidden input with id 'status'
+    
+            if (status.trim() === "3") {
                 setInterval(function() {
-                    var Longitude, Latitude;
-                    
                     function showPosition(position) {
-                        Latitude = position.coords.latitude;
-                        Longitude = position.coords.longitude;
-
-                        
-
+                        var Latitude = position.coords.latitude;
+                        var Longitude = position.coords.longitude;
+    
                         console.log("Latitude = " + Latitude);
                         console.log("Longitude = " + Longitude);
-                        var uri = "{% url 'driver:AjaxUpdate' %}";
+    
+    
                         $.ajax({
-                            type :"POST",
                             data: {
                                 id: id,
                                 longitude: Longitude,
-                                latitude: Latitude
-                            },  
+                                latitude: Latitude,
+                            },
                             url: uri,
-                            success: function() {}
+                            success: function(res) {
+                                console.log(res);
+                            }
                         });
-
                     }
-
+    
                     function getLocation() {
                         if (navigator.geolocation) {
                             navigator.geolocation.getCurrentPosition(showPosition);
@@ -82,11 +80,12 @@
                         }
                     }
                     getLocation();
-
+    
                 }, 10000);
             }
         });
     </script>
+    
 </body>
 </html>
 {% endblock content %}

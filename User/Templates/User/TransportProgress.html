@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Leaflet CSS and JS -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+        <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    </head>
+    
+    <body>
+        <div id="map" style="height: 400px;"></div>
+    </body>
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([0, 0], 2);
+    
+        // Add OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    
+        // Array to store coordinates
+        var coordinates = [];
+    
+        // Iterate over the data to extract coordinates
+        {% for request in transport_update_data %}
+            var latitude = {{ request.longitude }};
+            var longitude = {{ request.latitude }};
+            
+            // Add coordinates to the array
+            coordinates.push([latitude, longitude]);
+        {% endfor %}
+    
+        console.log('Coordinates:', coordinates); // Debugging
+        
+        // Create a polyline using the coordinates array
+        if (coordinates.length >= 2) {
+            var polyline = L.polyline(coordinates, {color: 'red'}).addTo(map);
+    
+            // Fit the map bounds to the polyline
+            map.fitBounds(polyline.getBounds());
+        } else {
+            console.error('Not enough coordinates to create a polyline.'); // Debugging
+        }
+    </script>
+    
+    
+</html>

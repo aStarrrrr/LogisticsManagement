@@ -33,7 +33,17 @@
                     <td>{{ request.delivery_time }}</td>
                     <td>{{ request.delivery_date }}</td>
                     <td>
-                        <a href="">Transport Progress</a>
+                        {% if request.transport_request_status == 0 %}
+                            Pending
+                        {% elif request.transport_request_status == 1 %}
+                            Rejected
+                        {% elif request.transport_request_status == 2 %}
+                            Accepted
+                        {% elif request.transport_request_status == 3 %}
+                            <a href="{% url 'user:TransportProgress' request.transport_request_id %}">Transport Progress</a>
+                        {% elif request.transport_request_status == 4 %}
+                            Delivered
+                        {% endif %}
                     </td>
                 </tr>
                 {% endfor %}
