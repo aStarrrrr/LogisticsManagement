@@ -65,7 +65,7 @@
             <tr>
                 <td>State</td>
                 <td>
-                    <select name="sel_state" id="sel_state">
+                    <select name="sel_state" id="sel_state1">
                         <option value="">----Select State----</option>
                         {% for i in state %}
                         <option value="{{i.state_id}}">{{i.state_name}}</option>
@@ -126,6 +126,17 @@
       data: { sid: sid },
       success: function (data) {
         $("#sel_district").html(data);
+      },
+    });
+  });
+
+  $("#sel_state1").change(function () {
+    var sid = $(this).val();
+    var uri = "{% url 'admin:AjaxDistrict' %}";
+    $.ajax({
+      url: uri,
+      data: { sid: sid },
+      success: function (data) {
         $("#sel_district1").html(data);
       },
     });
@@ -143,16 +154,18 @@
     });
   });
 
-  $("#sel_location").change(function () {
-    var lid = $(this).val();
-    var uri = "{% url 'admin:AjaxCompanyUser' %}";
+  $("#sel_district1").change(function () {
+    var did = $(this).val();
+    var uri = "{% url 'admin:AjaxLocation' %}";
     $.ajax({
       url: uri,
-      data: { lid: lid },
+      data: { did: did },
       success: function (data) {
-        $("#div_company").html(data);
+        $("#sel_location1").html(data);
       },
     });
   });
+
+  
 </script>
 {% endblock content %}

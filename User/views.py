@@ -57,5 +57,5 @@ def TransportProgress(request,id):
 
 
 def Logout(request):
-    del request.session["did"]
+    del request.session["uid"]
     return redirect("guest:Login")
