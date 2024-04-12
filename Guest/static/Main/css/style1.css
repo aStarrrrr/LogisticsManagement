@@ -1,0 +1,26 @@
+.front{
+    font-size: medium;
+    text-align: center;
+    color: #007bff;
+    vertical-align: middle;
+}
+
+ul{
+    float: right;
+    list-style-type: none;
+    margin-top: 30px;
+    margin-right: 60px;
+    min-height: 400px;
+    font-size: 25px;
+}
+ul li{
+    display: inline-block;
+}
+
+ul li a{
+    text-decoration: none;
+    color: #fff;
+    padding: 5px 20px;
+    border: 1px solid transparent;
+    transition: 0.5 ease;
+}
