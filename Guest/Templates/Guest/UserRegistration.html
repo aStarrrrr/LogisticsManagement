@@ -1,89 +1,108 @@
 {% extends 'Guest/Include.html' %}
 {% load static %}
 {% block content %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+	<meta charset="utf-8">
+	<title>Form-v10 by Colorlib</title>
+	<!-- Mobile Specific Metas -->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<!-- Font-->
+	<link rel="stylesheet" type="text/css" href="{% static 'Registration/css/montserrat-font.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'Registration/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css' %}">
+	<!-- Main Style Css -->
+    <link rel="stylesheet" href="{% static 'Registration/css/style.css' %}"/>
 </head>
-<body>
-    <div class="container mt-5">
-        <h2>User   Registration</h2>
-        <form method="post" >
-            {% csrf_token %}
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="txt_name">Name</label>
+<body class="form-v10">
+	<div class="page-content">
+		<div class="form-v10-content">
+			<form class="form-detail" action="#" method="post" id="myform">
+                {% csrf_token %}
+				<div class="form-left">
+					<h2>General Infomation</h2>
+					<div class="form-row">
+						<label for="txt_name">Name</label>
                         <input type="text" class="form-control" name="txt_name" id="txt_name" required pattern="^[A-Z]+[a-zA-Z ]*$" title="Name Allows Only Alphabets,Spaces and First Letter Must Be Capital Letter">
-                    </div>
-                    <div class="form-group">
-                        <label for="txt_contact">Contact</label>
-                        <input type="text" class="form-control" name="txt_contact" id="txt_contact" required pattern="[7-9]{1}[0-9]{9}" title="Phone number with 7-9 and remaining 9 digit with 0-9">
-                    </div>
-                    <div class="form-group">
-                        <label for="txt_email">Email</label>
+						
+					</div>
+					<div class="form-group">
+						<div class="form-row form-row-1">
+							<label for="txt_contact">Contact</label>
+                            <input type="text" class="form-control" name="txt_contact" id="txt_contact" required pattern="[7-9]{1}[0-9]{9}" title="Phone number with 7-9 and remaining 9 digit with 0-9">
+						</div>
+					</div>
+					<div class="form-row">
+						<label for="txt_email">Email</label>
                         <input type="email" class="form-control" name="txt_email" id="txt_email" required>
-                    </div>
-                    <div class="form-group">
+					</div>
+					<div class="form-row">
                         <label for="txt_dob">DOB</label>
                         <input type="date" class="form-control" name="txt_dob" id="txt_dob" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="txt_aadhar">Aadhar Number</label>
-                        <input type="text" class="form-control" name="txt_aadhar" id="txt_aadhar" required>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    
-                    <div class="form-group">
-                        <label for="txt_address">Address</label>
+					</div>
+					<div class="form-group">
+						<div class="form-row form-row-3">
+							<label for="txt_aadhar">Aadhar Number</label>
+                            <input type="text" class="form-control" name="txt_aadhar" id="txt_aadhar" required>
+						</div>
+					</div>
+				</div>
+				<div class="form-right">
+					<h2>Contact Details</h2>
+					<div class="form-row">
+						<label for="txt_address">Address</label>
                         <input type="text" class="form-control" name="txt_address" id="txt_address" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="sel_state">State</label>
+					</div>
+					<div class="form-row">
+						<label for="sel_state">State</label>
                         <select class="form-control" name="sel_state" id="sel_state" required>
                             <option value="">----Select State----</option>
                             {% for i in state %}
                             <option value="{{i.state_id}}">{{i.state_name}}</option>
                             {% endfor %}
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="sel_district">District</label>
+					</div>
+					<div class="form-group">
+						<div class="form-row form-row-1">
+							<label for="sel_district">District</label>
                         <select class="form-control" name="sel_district" id="sel_district" required>
                             <option value="">----Select District----</option>
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="sel_location">Location</label>
+						</div>
+						
+					</div>
+					<div class="form-row">
+						<label for="sel_location">Location</label>
                         <select class="form-control" name="sel_location" id="sel_location" required>
                             <option value="">----Select Location----</option>
                         </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="txt_password">Password</label>
+					</div>
+					<div class="form-group">
+						<div class="form-row form-row-1">
+							<label for="txt_password">Password</label>
                         <input type="password" class="form-control" name="txt_password" id="txt_password" >
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary" name="company_submit" id="company_submit">Submit</button>
-            </div>
-        </form>
-    </div>
-
-    <!-- Bootstrap JS and jQuery -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+						</div>
+						
+					</div>
+					
+					
+					<div class="form-row-last">
+						<button type="submit" class="btn btn-primary" name="company_submit" id="company_submit">Submit</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 </html>
+
+
+
+
+
+
+
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>

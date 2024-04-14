@@ -1,4 +1,5 @@
 {% load static %}
+<head>
 <ul>
   <li>
     <a href="{% url 'user:HomePage' %}">Home</a>
@@ -13,6 +14,9 @@
     <a href="{% url 'user:Logout' %}">Logout</a>
   </li>
 </ul>
+</head>
+<style>
 
+</style>
 {% block content %}
 {% endblock content %}

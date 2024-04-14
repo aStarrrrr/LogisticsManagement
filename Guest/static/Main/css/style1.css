@@ -1,8 +1,12 @@
+
+
 .front{
     font-size: medium;
     text-align: center;
     color: #007bff;
     vertical-align: middle;
+    height: 20px;
+    width: 30px;
 }
 
 ul{
@@ -12,14 +16,17 @@ ul{
     margin-right: 60px;
     min-height: 400px;
     font-size: 25px;
+    height: 10px;
+    
 }
+
 ul li{
     display: inline-block;
 }
 
 ul li a{
     text-decoration: none;
-    color: #fff;
+    color: red;
     padding: 5px 20px;
     border: 1px solid transparent;
     transition: 0.5 ease;

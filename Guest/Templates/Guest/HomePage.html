@@ -56,10 +56,10 @@
             </button>
             <div class="collapse navbar-collapse justify-content-between px-lg-3" id="navbarCollapse">
                 <div class="navbar-nav m-auto py-0">
-                    <a href="{% static 'Main/index.html'%}" class="nav-item nav-link active">Home</a>
-                    <a href="#About" class="nav-item nav-link">About</a>
-                    <a href="#Services" class="nav-item nav-link">Service</a>
-                    <a href="#Prices" class="nav-item nav-link">Price</a>
+                    <a href="{% url 'guest:HomePage' %}" class="nav-item nav-link active">Home</a>
+                    <a href="{% url 'guest:CompanyRegistration' %}" class="nav-item nav-link">Company Registration</a>
+                    <a href="{% url 'guest:DriverRegistration' %}" class="nav-item nav-link">Driver Registration</a>
+                    <a href="{% url 'guest:UserRegistration' %}" class="nav-item nav-link">User Registration</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu rounded-0 m-0">
@@ -68,9 +68,9 @@
                             <a href="{% url 'guest:UserRegistration' %}" class="dropdown-item">USER</a>
                         </div>
                     </div>
-                    <a href="{% static 'Main/contact.html'%}" class="nav-item nav-link">Contact</a>
+                    
                 </div>
-                
+                <a href="{% url 'guest:Login' %}" class="btn btn-primary py-2 px-4 d-none d-lg-block">Log In</a>
             </div>
         </nav>
     </div>

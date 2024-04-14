@@ -1,4 +1,14 @@
 {% load static %}
+<style>
+  ul {
+    float: right;
+    list-style-type: none;
+    margin-top: 30px;
+    margin-right: 60px;
+    min-height: 0px !important;
+    font-size: 25px;
+}
+</style>
 <link href="{% static 'Main/css/style1.css'%}" rel="stylesheet">
 <div class="front" id="front">
     <ul>
@@ -19,5 +29,6 @@
       </li>
     </ul>
 </div>
+
 {% block content %}
 {% endblock content %}
