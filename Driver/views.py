@@ -5,7 +5,7 @@ from Company.models import *
 from User.models import *
 from Guest.models import *
 from django.http import JsonResponse
-from .utils import dijkstra
+import heapq
 
 def HomePage(request):
     return render(request,"Driver/HomePage.html")
@@ -56,14 +56,15 @@ def AssignedTrip(request):
     data = tbl_transport_shedule.objects.filter(driver_1_id=did) | tbl_transport_shedule.objects.filter(driver_2_id=did)
     return render(request,"Driver/AssignedTrip.html",{'data':data})
 
-def AssignedUpdate(request,id,sts):
-    data = tbl_transport_request.objects.get(transport_request_id=id)
-    data.transport_request_status=sts
-    data.save()
-    return redirect("driver:AssignedTrip")
+def ViewMore(request,tid):
+    data = tbl_transport_request.objects.get(transport_request_id=tid)
+    start_id = data.from_location_id.location_id
+    end_id = data.from_location_id.location_id
+    shortest_path(start_id, end_id)
+    return render(request,"Driver/ViewMore.html",{'data':data})
 
 
-def shortest_path(request, start_id, end_id):
+def shortest_path(start_id, end_id):
     start_location = tbl_location.objects.get(location_id=start_id)
     end_location = tbl_location.objects.get(location_id=end_id)
     
@@ -78,8 +79,37 @@ def shortest_path(request, start_id, end_id):
     distances = dijkstra(graph, start_location)
     shortest_distance = distances[end_location]
 
+    print(shortest_distance)
+
     return {'start_location': start_location,'end_location': end_location,'shortest_distance': shortest_distance}
 
+
+def dijkstra(graph, start):
+    distances = {node: float('infinity') for node in graph}
+    distances[start] = 0
+    queue = [(0, start)]
+    
+    while queue:
+        current_distance, current_node = heapq.heappop(queue)
+        
+        if current_distance > distances[current_node]:
+            continue
+        
+        for neighbor, weight in graph[current_node].items():
+            distance = current_distance + weight
+            if distance < distances[neighbor]:
+                distances[neighbor] = distance
+                heapq.heappush(queue, (distance, neighbor))
+    
+    return distances
+
+
+
+def AssignedUpdate(request,id,sts):
+    data = tbl_transport_request.objects.get(transport_request_id=id)
+    data.transport_request_status=sts
+    data.save()
+    return redirect("driver:AssignedTrip")
 
 def AjaxUpdate(request):    
     id = tbl_transport_request.objects.get(transport_request_id=request.GET.get("id"))

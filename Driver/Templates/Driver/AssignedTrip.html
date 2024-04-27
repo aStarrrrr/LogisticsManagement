@@ -28,6 +28,8 @@
                         <input type="hidden" value="{{ schedule.transport_request_id.transport_request_id }}" id="hid">
                     </td>
                     <td>
+                        <a href="{% url 'driver:ViewMore' schedule.transport_request_id.transport_request_id %}">View</a>
+
                         {% if schedule.transport_request_id.transport_request_status == 2 %}
                             <a href="{% url 'driver:AssignedUpdate' schedule.transport_request_id.transport_request_id 3 %}">Start</a>
                         {% elif schedule.transport_request_id.transport_request_status == 3 %}
