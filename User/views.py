@@ -26,6 +26,7 @@ def SendRequest(request,cid):
             transport_request_qty=request.POST.get('txt_request_qty'),
             transport_request_for_date=request.POST.get('txt_request_for_date'),     
             user_id=uid,
+            transport_request_rate=request.POST.get('txt_request_amount'),  
             from_location_id=selectedFromLocation,
             to_location_id=selectedToLocation,
             company_id=cid,

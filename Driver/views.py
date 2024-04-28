@@ -17,7 +17,6 @@ def dijkstra(start_id, end_id):
     common_route_ids = dataFrom.values_list('route_id', flat=True).intersection(dataTo.values_list('route_id', flat=True))
     common_route_ids_list = list(common_route_ids)
     if not dataFrom or not dataTo:
-        print('dataFrom',dataFrom)
         return 'No routes found'
     graph = {}
     for route_id in common_route_ids_list:

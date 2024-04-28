@@ -8,6 +8,7 @@ class tbl_transport_request(models.Model):
     transport_request_description = models.CharField(max_length=50)
     transport_request_date = models.DateField(auto_now_add=True)
     transport_request_qty = models.CharField(max_length=50)
+    transport_request_rate = models.CharField(max_length=50,null=True)
     transport_request_for_date = models.CharField(max_length=50)
     transport_request_status = models.PositiveIntegerField(default=0)
     user_id = models.ForeignKey(tbl_user,on_delete=models.CASCADE)
