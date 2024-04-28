@@ -10,7 +10,6 @@ urlpatterns = [
     path('ViewRequest/',views.ViewRequest,name="ViewRequest"),
     path('AssignedTrip/',views.AssignedTrip,name="AssignedTrip"),
     path('AssignedUpdate/<int:id>/<int:sts>',views.AssignedUpdate,name="AssignedUpdate"),
-    path('ViewMore/<int:tid>',views.ViewMore,name="ViewMore"),
     path('AjaxUpdate/',views.AjaxUpdate,name="AjaxUpdate"),
     path('Logout/',views.Logout,name="Logout"), 
 ]
