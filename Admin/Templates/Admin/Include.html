@@ -23,6 +23,7 @@
   <!-- endinject -->
   <!-- Layout styles -->
   <link rel="stylesheet" href="{% static 'Admin/assets/css/style.css'%}">
+  <link rel="stylesheet" href="{% static 'Form.css'%}">
   <!-- End layout styles -->
   <link rel="shortcut icon" href="{% static 'Admin/assets/images/favicon.png'%}" />
 </head>
@@ -332,8 +333,11 @@
           </li>
         </ul>
       </nav>
-      {% block content %}
-      {% endblock content %}
+      <div id="tab" align="center">
+
+        {% block content %}
+        {% endblock content %}
+      </div>
       <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->

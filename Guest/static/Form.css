@@ -1,0 +1,63 @@
+#tab {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  #tab td, #tab th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    color: #C00;
+  }
+  #tab a {
+  
+   color:#06F;
+  }
+  
+  #tab tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #tab tr:hover {background-color: #ddd;}
+  
+  #tab th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #318CBD;
+    color: white;
+  }
+  input[type=text],[type=password],[type=email],[type=date], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  input[type=submit] {
+    width: 40%;
+    background-color: #096;
+    color: white;
+    padding:  15px;
+    margin: 4px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  input[type=reset] {
+    width: 40%;
+    background-color: #096;
+    color: white;
+    padding: 15px;
+    margin: 4px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  input[type=submit]:hover {
+    background-color: #900;
+  }
+  input[type=reset]:hover {
+    background-color: #900;
+  }

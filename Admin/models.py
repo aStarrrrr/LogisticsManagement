@@ -36,14 +36,17 @@ class tbl_location(models.Model):
 class tbl_route(models.Model):
     route_id = models.AutoField(primary_key=True)
     route_name = models.CharField(max_length=50)
+    from_location_id = models.ForeignKey(tbl_location, on_delete=models.CASCADE, related_name="from_routes",null=True)
+    to_location_id = models.ForeignKey(tbl_location, on_delete=models.CASCADE, related_name="to_routes",null=True)
+    route_distance = models.DecimalField(max_digits=10, decimal_places=2,null=True) 
 
 
 
 class tbl_points(models.Model):
     points_id = models.AutoField(primary_key=True)
-    points_distance = models.CharField(max_length=50)
-    points_name = models.CharField(max_length=50)
+    points_distance = models.DecimalField(max_digits=10, decimal_places=2)  
     points_order = models.CharField(max_length=50)
+    points_name = models.CharField(max_length=50,null=True)
     from_location_id = models.ForeignKey(tbl_location,on_delete=models.CASCADE,related_name="from_location_id1")
     to_location_id = models.ForeignKey(tbl_location,on_delete=models.CASCADE,related_name="to_location_id1")
     route_id = models.ForeignKey(tbl_route,on_delete=models.CASCADE)
