@@ -6,7 +6,7 @@ from User.models import *
 from Guest.models import *
 from django.http import JsonResponse
 import heapq
-
+from decimal import Decimal
 
 
 def dijkstra(graph, start):
@@ -16,7 +16,7 @@ def dijkstra(graph, start):
     
     while queue:
         current_distance, current_node = heapq.heappop(queue)
-        print(distances)
+        # print(distances)
         # if current_distance > distances[current_node]:
         #     continue
         # for neighbor, weight in graph[current_node].items():
@@ -35,6 +35,7 @@ def shortest_path(start_id, end_id):
 
     common_route_ids = dataFrom.values_list('route_id', flat=True).intersection(dataTo.values_list('route_id', flat=True))
     common_route_ids_list = list(common_route_ids)
+    print('common_route_ids_list:', common_route_ids_list)
 
     graph = {}
     for route_id in common_route_ids_list:
@@ -42,6 +43,16 @@ def shortest_path(start_id, end_id):
         graph[route_id] = {}
         for point in route_data:
             graph[route_id][point.location_id.location_id] = point.points_distance
+
+    print('graph:', graph)
+
+    sums = {}
+    for main_node, sub_nodes in graph.items():
+        total = sum(sub_nodes.values())
+        sums[main_node] = total
+
+    min_node = min(sums, key=sums.get)
+    print("Node with the least sum:", min_node)
 
     distances = dijkstra(graph, start_id)
     shortest_distance = distances[end_id]
