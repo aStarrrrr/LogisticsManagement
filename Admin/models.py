@@ -10,14 +10,15 @@ class tbl_category(models.Model):
     category_name = models.CharField(max_length=50)
 
 
-class tbl_state(models.Model):
-    state_id = models.AutoField(primary_key=True)
-    state_name = models.CharField(max_length=50)
-
 class tbl_complainttype(models.Model):
     complainttype_id = models.AutoField(primary_key=True)
     complainttype_name = models.CharField(max_length=50)
 
+
+
+class tbl_state(models.Model):
+    state_id = models.AutoField(primary_key=True)
+    state_name = models.CharField(max_length=50)
 
 
 
@@ -46,12 +47,8 @@ class tbl_points(models.Model):
     points_id = models.AutoField(primary_key=True)
     points_distance = models.DecimalField(max_digits=10, decimal_places=2)  
     points_order = models.CharField(max_length=50)
-    points_name = models.CharField(max_length=50,null=True)
-    from_location_id = models.ForeignKey(tbl_location,on_delete=models.CASCADE,related_name="from_location_id1")
-    to_location_id = models.ForeignKey(tbl_location,on_delete=models.CASCADE,related_name="to_location_id1")
+    location_id = models.ForeignKey(tbl_location,on_delete=models.CASCADE,null=True)
     route_id = models.ForeignKey(tbl_route,on_delete=models.CASCADE)
-
-
 
 
 class tbl_vehicletype(models.Model):

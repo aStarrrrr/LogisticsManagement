@@ -17,10 +17,6 @@
                 <td><input type="text" name="txt_distance" id=""></td>
             </tr>
             <tr>
-                <td>Point Name</td>
-                <td><input type="text" name="txt_name" id=""></td>
-            </tr>
-            <tr>
                 <td>Point Order </td>
                 <td><input type="text" name="txt_order" id=""></td>
             </tr>
@@ -55,36 +51,9 @@
                 </td>
             </tr>
             <tr>
-                <td>From Location</td>
+                <td> Location</td>
                 <td>
                     <select name="sel_flocation" id="sel_location">
-                        <option value="">----Select Location----</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>State</td>
-                <td>
-                    <select name="sel_state" id="sel_state1">
-                        <option value="">----Select State----</option>
-                        {% for i in state %}
-                        <option value="{{i.state_id}}">{{i.state_name}}</option>
-                        {% endfor %}
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>District</td>
-                <td>
-                    <select name="sel_district" id="sel_district1">
-                        <option value="">----Select District----</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td>To Location</td>
-                <td>
-                    <select name="sel_tlocation" id="sel_location1">
                         <option value="">----Select Location----</option>
                     </select>
                 </td>
@@ -99,8 +68,7 @@
             <td>#</td>
             <td>Name</td>
             <td>Distance</td>
-            <td>From Location</td>
-            <td>To Location</td>
+            <td>Location</td>
             <td>Action</td>
         </tr>
         {% for i in points %}
@@ -108,8 +76,7 @@
             <td>{{forloop.counter}}</td>
             <td>{{i.route_id.route_name}}</td>
             <td>{{i.points_distance}}</td>
-            <td>{{i.from_location_id.location_name}}</td>
-            <td>{{i.to_location_id.location_name}}</td>
+            <td>{{i.location_id.location_name}}</td>
             <td><a href="{% url 'admin:DeletePoints' i.points_id %}">Delete</a></td>
         </tr>
         {% endfor %}
@@ -129,18 +96,6 @@
       },
     });
   });
-
-  $("#sel_state1").change(function () {
-    var sid = $(this).val();
-    var uri = "{% url 'admin:AjaxDistrict' %}";
-    $.ajax({
-      url: uri,
-      data: { sid: sid },
-      success: function (data) {
-        $("#sel_district1").html(data);
-      },
-    });
-  });
   $("#sel_district").change(function () {
     var did = $(this).val();
     var uri = "{% url 'admin:AjaxLocation' %}";
@@ -149,18 +104,6 @@
       data: { did: did },
       success: function (data) {
         $("#sel_location").html(data);
-        $("#sel_location1").html(data);
-      },
-    });
-  });
-
-  $("#sel_district1").change(function () {
-    var did = $(this).val();
-    var uri = "{% url 'admin:AjaxLocation' %}";
-    $.ajax({
-      url: uri,
-      data: { did: did },
-      success: function (data) {
         $("#sel_location1").html(data);
       },
     });

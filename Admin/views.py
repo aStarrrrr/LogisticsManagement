@@ -227,11 +227,9 @@ def NewPoints(request):
     if request.method == "POST":
         selectedRoute=tbl_route.objects.get(route_id=request.POST.get("sel_route"))
         tbl_points.objects.create(points_distance=request.POST.get("txt_distance"),
-                            points_name=request.POST.get("txt_name"),
                             points_order=request.POST.get("txt_order"),
                             route_id = selectedRoute,
-                            from_location_id=tbl_location.objects.get(location_id=request.POST.get("sel_flocation")),
-                            to_location_id=tbl_location.objects.get(location_id=request.POST.get("sel_tlocation")))
+                            location_id=tbl_location.objects.get(location_id=request.POST.get("sel_flocation")))
         return redirect("admin:NewPoints")
     else:
         return render(request,"Admin/Points.html",{"route":route,'points':points,'state':state})

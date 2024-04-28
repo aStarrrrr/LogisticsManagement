@@ -7,6 +7,60 @@ from Guest.models import *
 from django.http import JsonResponse
 import heapq
 
+
+
+def dijkstra(graph, start):
+    distances = {node: float('infinity') for node in graph}
+    distances[start] = 0
+    queue = [(0, start)]
+    
+    while queue:
+        current_distance, current_node = heapq.heappop(queue)
+        print(distances)
+        # if current_distance > distances[current_node]:
+        #     continue
+        # for neighbor, weight in graph[current_node].items():
+        #     distance = current_distance + weight
+        #     if distance < distances[neighbor]:
+        #         distances[neighbor] = distance
+        #         heapq.heappush(queue, (distance, neighbor))
+    
+    return distances
+
+
+
+def shortest_path(start_id, end_id):
+    dataFrom = tbl_points.objects.filter(location_id=start_id)
+    dataTo = tbl_points.objects.filter(location_id=end_id)
+
+    common_route_ids = dataFrom.values_list('route_id', flat=True).intersection(dataTo.values_list('route_id', flat=True))
+    common_route_ids_list = list(common_route_ids)
+
+    graph = {}
+    for route_id in common_route_ids_list:
+        route_data = tbl_points.objects.filter(route_id=route_id)
+        graph[route_id] = {}
+        for point in route_data:
+            graph[route_id][point.location_id.location_id] = point.points_distance
+
+    distances = dijkstra(graph, start_id)
+    shortest_distance = distances[end_id]
+
+    return {'shortest_distance': shortest_distance}
+
+
+
+
+def ViewMore(request,tid):
+    data = tbl_transport_request.objects.get(transport_request_id=tid)
+    start_id = data.from_location_id.location_id
+    end_id = data.to_location_id.location_id
+    shortest_path(start_id,end_id)
+    return render(request,"Driver/ViewMore.html",{'data':data})
+
+
+
+
 def HomePage(request):
     return render(request,"Driver/HomePage.html")
 
@@ -56,61 +110,6 @@ def AssignedTrip(request):
     data = tbl_transport_shedule.objects.filter(driver_1_id=did) | tbl_transport_shedule.objects.filter(driver_2_id=did)
     return render(request,"Driver/AssignedTrip.html",{'data':data})
 
-
-def dijkstra(graph, start):
-    distances = {node: float('infinity') for node in graph}
-    distances[start] = 0
-    queue = [(0, start)]
-    print(graph)
-    print(distances)
-  
-  
-    while queue:
-        current_distance, current_node = heapq.heappop(queue)
-        print('hi')
-        print(distances[current_node])
-        if current_distance > distances[current_node]:
-            continue
-        print(current_node)
-        print(graph[2])
-        for neighbor, weight in graph[current_node].items():
-            print('hello')
-            distance = current_distance + weight
-            if distance < distances[neighbor]:
-                distances[neighbor] = distance
-                heapq.heappush(queue, (distance, neighbor))
-    
-    return distances
-
-
-
-def shortest_path(start_id,end_id):
-    start_location = tbl_location.objects.get(location_id=start_id)
-    end_location = tbl_location.objects.get(location_id=end_id)
-    
-    # Build graph
-    graph = {}
-    for route in tbl_route.objects.all():
-    
-        # if route.from_location_id_id not in graph:
-        graph[route.from_location_id_id] = {}
-        graph[route.from_location_id_id][route.to_location_id_id] = route.route_distance
-      
-    # Find shortest path
-    distances = dijkstra(graph, start_id)
- 
-    shortest_distance = distances[end_id]
-
-    return {'start_location': start_location,'end_location': end_location,'shortest_distance': shortest_distance}
-
-
-
-def ViewMore(request,tid):
-    data = tbl_transport_request.objects.get(transport_request_id=tid)
-    start_id = data.from_location_id.location_id
-    end_id = data.to_location_id.location_id
-    shortest_path(start_id,end_id)
-    return render(request,"Driver/ViewMore.html",{'data':data})
 
 
 
